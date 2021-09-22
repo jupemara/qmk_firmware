@@ -130,11 +130,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
            tap_code(KC_TAB);
          } else if (is_gui_active) {
            register_code(KC_LGUI);
-           tap_code(KC_TAB);
+           tap_code(KC_GRV);
          } else {
-           tap_code(KC_ESC);
-           unregister_code(KC_LGUI);
+           tap_code(keycode);
            unregister_code(KC_LCTL);
+           unregister_code(KC_LGUI);
          }
       }
       return false;
