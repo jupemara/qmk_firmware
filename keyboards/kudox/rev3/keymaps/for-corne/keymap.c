@@ -7,19 +7,22 @@
 #define _QWERTY 0
 #define _RAISE 1
 #define _LOWER 2
-#define _MOUSE 3
+#define _SPECIAL 3
 #define _LIGHT 4
 
 // Shortcut to make keymap more readable
-#define RAISE   LT(_RAISE, KC_LANG2)
-#define LOWER   LT(_LOWER, KC_LANG1)
-#define MOUSE   LT(_MOUSE, KC_ENT)
-#define KC_ZALT LALT_T(KC_Z)
-#define TO_LIGH TO(_LIGHT)
-#define TO_QWER TO(_QWERTY)
+#define RAISE    LT(_RAISE, KC_LANG2)
+#define LOWER    LT(_LOWER, KC_LANG1)
+#define SPECIAL  LT(_SPECIAL, KC_ENT)
+#define KC_TBALT LALT_T(KC_TAB)
+#define TO_LIGH  TO(_LIGHT)
+#define TO_QWER  TO(_QWERTY)
 
-#define KC_ALES LALT_T(KC_ESC)
-#define KC_ALEN LALT_T(KC_ENT)
+bool is_ctl_active = false;
+bool is_gui_active = false;
+enum custom_keycodes {
+  M_SS_MEM = SAFE_RANGE
+};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -27,13 +30,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //┌────────┬────────┬────────┬────────┬────────┬────────┬────────┐                ┌────────┬────────┬────────┬────────┬────────┬────────┬────────┐
      KC_ESC  ,KC_GRV  ,KC_1    ,KC_2    ,KC_3    ,KC_4    ,KC_5    ,                 KC_6    ,KC_7    ,KC_8    ,KC_9    ,KC_0    ,KC_MINS ,KC_BSPC ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┤                ├────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_GESC ,KC_Q    ,KC_W    ,KC_E    ,KC_R    ,KC_T    ,KC_LANG2,                 KC_Y    ,KC_U    ,KC_I    ,KC_O    ,KC_P    ,KC_BSPC ,KC_BSPC ,
+     KC_ESC  ,KC_Q    ,KC_W    ,KC_E    ,KC_R    ,KC_T    ,KC_LANG2,                 KC_Y    ,KC_U    ,KC_I    ,KC_O    ,KC_P    ,KC_BSPC ,KC_BSPC ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┘                └────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LCTL ,KC_A    ,KC_S    ,KC_D    ,KC_F    ,KC_G    ,                                   KC_H    ,KC_J    ,KC_K    ,KC_L    ,KC_SCLN ,KC_ENT  ,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                                  ├────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LSFT ,KC_ZALT ,KC_X    ,KC_C    ,KC_V    ,KC_B    ,                                   KC_N    ,KC_M    ,KC_COMM ,KC_DOT  ,KC_SLSH ,KC_RSFT ,
+     KC_LSFT ,KC_Z    ,KC_X    ,KC_C    ,KC_V    ,KC_B    ,                                   KC_N    ,KC_M    ,KC_COMM ,KC_DOT  ,KC_SLSH ,KC_RSFT ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐                ┌────────┼────────┼────────┴────────┼────────┼────────┼────────┤
-     KC_LCTL ,KC_LSFT ,KC_LALT ,KC_TAB  ,KC_LGUI ,RAISE   ,KC_SPC  ,                 MOUSE   ,LOWER   ,KC_TAB  ,KC_LEFT ,KC_UP   ,KC_RIGHT,KC_ESC
+     KC_LCTL ,KC_LSFT ,KC_LALT ,KC_TAB  ,KC_LGUI ,RAISE   ,KC_SPC  ,                 SPECIAL ,LOWER   ,KC_TBALT,KC_LEFT ,KC_UP   ,KC_RIGHT,KC_ESC
   //└────────┴────────┴────────┴────────┴────────┴────────┴────────┘                └────────┴────────┴────────┴────────┴────────┴────────┴────────┘
   ),
 
@@ -65,13 +68,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //└────────┴────────┴────────┴────────┴────────┴────────┴────────┘                └────────┴────────┴────────┴────────┴────────┴────────┴────────┘
   ),
 
-  [_MOUSE] = LAYOUT(
+  [_SPECIAL] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┬────────┐                ┌────────┬────────┬────────┬────────┬────────┬────────┬────────┐
      _______ ,_______ ,_______ ,_______ ,_______ ,_______ ,_______ ,                 _______ ,_______ ,_______ ,_______ ,_______ ,_______ ,_______ ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┤                ├────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     _______ ,_______ ,_______ ,_______ ,_______ ,_______ ,_______ ,                 _______ ,KC_PGDN ,KC_PGUP ,_______ ,_______ ,_______ ,_______ ,
+     _______ ,_______ ,_______ ,_______ ,_______ ,_______ ,_______ ,                 _______ ,KC_WH_D ,KC_WH_U ,KC_PGUP ,KC_PGDN ,_______ ,_______ ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┘                └────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     _______ ,_______ ,_______ ,_______ ,_______ ,_______ ,                                   KC_MS_L ,KC_MS_D ,KC_MS_U ,KC_MS_R ,_______ ,_______ ,
+     _______ ,_______ ,M_SS_MEM,_______ ,_______ ,_______ ,                                   KC_MS_L ,KC_MS_D ,KC_MS_U ,KC_MS_R ,_______ ,RESET   ,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                                  ├────────┼────────┼────────┼────────┼────────┼────────┤
      _______ ,_______ ,_______ ,_______ ,_______ ,_______ ,                                   KC_BTN1 ,KC_BTN2 ,_______ ,_______ ,_______ ,_______ ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐                ┌────────┼────────┼────────┴────────┼────────┼────────┼────────┤
@@ -98,6 +101,64 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #ifdef RGBLIGHT_ENABLE
 void eeconfig_init_user(void) {
-    rgblight_mode(RGBLIGHT_MODE_RAINBOW_SWIRL);
+  rgblight_mode(RGBLIGHT_MODE_RAINBOW_SWIRL);
 };
 #endif
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record)
+{
+  switch (keycode)
+  {
+    case M_SS_MEM:
+      if (record->event.pressed)
+      {
+        register_code(KC_LCTL);
+        register_code(KC_LSFT);
+        register_code(KC_LGUI);
+        tap_code(KC_4);
+        unregister_code(KC_LCTL);
+        unregister_code(KC_LSFT);
+        unregister_code(KC_LGUI);
+      }
+      return false;
+      break;
+    case KC_ESC:
+      if (record->event.pressed)
+      {
+         if (is_ctl_active) {
+           register_code(KC_LCTL);
+           tap_code(KC_TAB);
+         } else if (is_gui_active) {
+           register_code(KC_LGUI);
+           tap_code(KC_TAB);
+         } else {
+           tap_code(KC_ESC);
+           unregister_code(KC_LGUI);
+           unregister_code(KC_LCTL);
+         }
+      }
+      return false;
+      break;
+    case KC_LCTL:
+      if (record->event.pressed)
+      {
+        is_ctl_active = true;
+      }
+      else
+      {
+        is_ctl_active = false;
+      }
+      break;
+    case KC_LGUI:
+      if (record->event.pressed)
+      {
+        is_gui_active = true;
+      }
+      else
+      {
+        is_gui_active = false;
+      }
+      break;
+  }
+  return true;
+};
