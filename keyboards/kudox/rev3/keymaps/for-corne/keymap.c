@@ -13,7 +13,7 @@
 // Shortcut to make keymap more readable
 #define RAISE    LT(_RAISE, KC_LANG2)
 #define LOWER    LT(_LOWER, KC_LANG1)
-#define SPECIAL  LT(_SPECIAL, KC_ENT)
+#define SPECIAL  LT(_SPECIAL, KC_BSPC)
 #define KC_TBALT LALT_T(KC_TAB)
 #define TO_LIGH  TO(_LIGHT)
 #define TO_QWER  TO(_QWERTY)
