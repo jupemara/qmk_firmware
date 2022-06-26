@@ -19,6 +19,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include QMK_KEYBOARD_H
 #include <stdio.h>
 
+#define M_SS_MEM LGUI(LSFT(LCTL(KC_4)))
+#define M_SS_DSK LGUI(LSFT(KC_4))
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                            ,-----------------------------------------------------.
@@ -61,7 +64,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
         RESET, XXXXXXX, XXXXXXX, KC_MUTE, KC_VOLD, KC_VOLU,                      KC_WH_U, KC_WH_D, KC_PGDN, KC_PGUP, XXXXXXX, KC_EJCT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MPLY, XXXXXXX,                      KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, XXXXXXX, XXXXXXX,
+      XXXXXXX, XXXXXXX,M_SS_MEM,M_SS_DSK, KC_MPLY, XXXXXXX,                      KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MPRV, KC_MNXT,                      KC_BTN1, KC_BTN2, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -178,9 +181,6 @@ void oled_render_logo(void) {
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
         oled_render_layer_state();
-        oled_render_keylog();
-    } else {
-        oled_render_logo();
     }
     return false;
 }
@@ -188,31 +188,6 @@ bool oled_task_user(void) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
     set_keylog(keycode, record);
-  }
-  switch (keycode) {
-
-    case M_SS_MEM:
-      if (record->event.pressed) {
-        register_code(KC_LCTL);
-        register_code(KC_LSFT);
-        register_code(KC_LGUI);
-        tap_code(KC_4);
-        unregister_code(KC_LCTL);
-        unregister_code(KC_LSFT);
-        unregister_code(KC_LGUI);
-      }
-      return false;
-      break;
-    case M_SS_DSK:
-      if (record->event.pressed) {
-        register_code(KC_LSFT);
-        register_code(KC_LGUI);
-        tap_code(KC_4);
-        unregister_code(KC_LSFT);
-        unregister_code(KC_LGUI);
-      }
-      return false;
-      break;
   }
   return true;
 }
