@@ -18,7 +18,8 @@
 #define SS_MEM LGUI(LSFT(LCTL(KC_4)))
 #define SS_DSK LGUI(LSFT(KC_4))
 #define MT_LSFT MT(MOD_LSFT, KC_SPC)
-#define MT_RSFT MT(MOD_RSFT, KC_BSPC)
+#define MT_SFTB MT(MOD_RSFT, KC_BSPC)
+#define MT_SFTD MT(MOD_RSFT, KC_DEL)
 #define MT_RALT MT(MOD_RALT, KC_ENT)
 #define LOWER LT(1, KC_LANG2)
 #define RAISE LT(2, KC_LANG1)
@@ -41,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //`-------+-------+-------+-------+-------+-------|                                    |-------+-------+-------+-------+-------+-------'
               KC_Z  , KC_X  , KC_C  , KC_V  , KC_B  ,                                      KC_N  , KC_M  ,KC_COMM,KC_DOT ,KC_SLSH,
   //        `-------+-------+-------+-------+-------+-------+-------.    ,-------+-------+-------+-------+-------+-------+-------'
-                                     KC_LGUI,KC_LSFT,LOWER  ,KC_SPC,      MT_RSFT,RAISE  ,KC_ENT, KC_TAB
+                                     KC_LGUI,KC_LSFT,LOWER  ,KC_SPC,      MT_SFTB,RAISE  ,KC_ENT, KC_TAB
   //                                `-------+-------+-------+-------'    `-------+-------+-------+-------'
   ),
 
@@ -53,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //`-------+-------+-------+-------+-------+-------|                                    |-------+-------+-------+-------+-------+-------|
              KC_CIRC,KC_AMPR,KC_ASTR,KC_LPRN,KC_RPRN,                                     KC_MINS,KC_PLUS,KC_LABK,KC_RABK,KC_BSLS,
   //        `-------+-------+-------+-------+-------+-------+-------.    ,-------+-------+-------+-------+-------+-------+-------'
-                                     _______,_______,_______,_______,     MT_RSFT, MO(3),  _______,_______
+                                     _______,_______,_______,_______,     MT_SFTD, MO(3), KC_ESC, _______
   //                                `-------+-------+-------+-------'    `-------+-------+-------+-------'
   ),
 
@@ -65,9 +66,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //`-------+-------+-------+-------+-------+-------|                                    |-------+-------+-------+-------+-------+-------'
              _______,_______,KC_TILD,KC_UNDS,KC_EQL,                                     KC_LEFT,KC_DOWN,KC_UP,  KC_RIGHT,KC_BSLS,
   //        `-------+-------+-------+-------+-------+-------+-------.    ,-------+-------+-------+-------+-------+-------+-------'
-                                     _______,_______,MO(3),  _______,     MT_RSFT,_______,_______,_______
+                                     _______,_______,MO(3),  _______,     MT_SFTD,_______,KC_ESC, _______
   //                                `-------+-------+-------+-------'    `-------+-------+-------+-------'
-
+  ),
 
   [_ADJUST] = LAYOUT(
   //,-------+-------+-------+-------+-------+-------.                                    ,-------+-------+-------+-------+-------+-------.
