@@ -26,12 +26,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define MASTER_LEFT
 // #define MASTER_RIGHT
-// #define EE_HANDS
 
-//#define TAPPING_FORCE_HOLD
-//#define TAPPING_TERM 100
-
-#define OLED_FONT_H "keyboards/crkbd/lib/glcdfont.c"
+// #define QUICK_TAP_TERM 0
+#define TAPPING_TERM 125
+#define TAPPING_TERM_PER_KEY
+// #define OLED_FONT_H "keyboards/crkbd/lib/glcdfont.c"
 
 // mouse speed
 #define MOUSEKEY_INTERVAL 20
