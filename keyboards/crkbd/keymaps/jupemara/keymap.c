@@ -17,7 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include QMK_KEYBOARD_H
-#include <stdio.h>
 
 enum layer_number {
     _BASE = 0,
@@ -91,23 +90,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   )
 };
 
-const key_override_t ctl_tab = ko_make_basic(
-  MOD_MASK_CTRL,
-  KC_Q,
-  C(KC_TAB)
-);
-
-const key_override_t gui_grv = ko_make_basic(
-  MOD_MASK_GUI,
-  KC_Q,
-  G(KC_GRV)
-);
+#ifdef KEY_OVERRIDE_ENABLE
 
 const key_override_t **key_overrides = (const key_override_t *[]){
-    &ctl_tab,
-    &gui_grv,
-    NULL
+  &ko_make_basic(MOD_MASK_CTRL, KC_Q, C(KC_TAB)),
+  &ko_make_basic(MOD_MASK_GUI, KC_Q, G(KC_GRV)),
+  NULL
 };
+
+#endif
 
 #ifdef OLED_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
